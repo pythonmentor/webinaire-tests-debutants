@@ -10,6 +10,6 @@ def prompt_number(message, min_=None, max_=None):
             number = int(response)
             if min_ is not None and number < min_:
                 continue
-            if max_ is not None and number > max_:
+            if max_ is not None and number >= max_:
                 continue
             return number

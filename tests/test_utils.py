@@ -1,62 +1,44 @@
 import sys
+import io
 
 from zcasino.utils import prompt_number
 
 
-def test_prompt_number_returns_a_number(monkeypatch):
+def test_prompt_number_returns_a_number():
     """Vérifie que notre fonction prompt_number retourne un entier."""
-
-    def user_input(message):
-        print(message, end="")
-        return "10"
-
-    monkeypatch.setattr('builtins.input', user_input)
-
+    # On simule le fait que l'utilisateur a entré le nombre 10
+    sys.stdin = io.StringIO("10")
     result = prompt_number("un message pour l'utilisateur")
     assert isinstance(result, int)
 
 
-def test_prompt_number_writes_message_to_stdout(capsys, monkeypatch):
+def test_prompt_number_writes_message_to_stdout(capsys):
     """Vérifie que le message passé en paramètre de la fonction est affiché
     à l'utilisateur."""
-
-    def user_input(message):
-        print(message, end="")
-        return "10"
-
-    monkeypatch.setattr('builtins.input', user_input)
+    # On simule le fait que l'utilisateur a entré le nombre 10
+    sys.stdin = io.StringIO("10")
     result = prompt_number("un message pour l'utilisateur")
     captured = capsys.readouterr()
     assert captured.out == "un message pour l'utilisateur"
 
 
-def test_prompt_number_asks_question_twice_if_nonint_answer(
-    capsys, monkeypatch
-):
+def test_prompt_number_asks_question_twice_if_nonint_answer(capsys):
     """Vérifie que le message est affiché une seconde fois si l'utilisateur entre
     une chaine de caractères à la place d'un entier."""
-    inputs = ["aaa", "10"]
-
-    def user_input(message):
-        print(message, end="")
-        return inputs.pop(0)
-
-    monkeypatch.setattr('builtins.input', user_input)
+    # On simule le fait que l'utilisateur a entré la chaine "aaa"
+    # puis le nombre 10
+    sys.stdin = io.StringIO("aaa\n10")
     result = prompt_number("un message pour l'utilisateur")
     captured = capsys.readouterr()
     assert captured.out == "un message pour l'utilisateur" * 2
 
 
-def test_prompt_number_returns_a_number_larger_than_min(capsys, monkeypatch):
+def test_prompt_number_returns_a_number_larger_than_min(capsys):
     """Vérifie que le message est affiché tant que l'utilisateur ne répond pas
     avec une nombre supérieur à la valeur minimale demandée."""
-    inputs = ["1", "2", "3", "4", "5", "6"]
-
-    def user_input(message):
-        print(message, end="")
-        return inputs.pop(0)
-
-    monkeypatch.setattr('builtins.input', user_input)
+    # On simule le fait que l'utilisateur a entré les nombre 1, puis 2, puis
+    # 3, puis 4, puis 5
+    sys.stdin = io.StringIO("1\n2\n3\n4\n5")
     result = prompt_number("un message pour l'utilisateur", min_=5)
     captured = capsys.readouterr()
     # On vérifie que le message est affiché jusqu'à ce que l'utiliateur
