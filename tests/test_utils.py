@@ -18,6 +18,7 @@ def test_prompt_number_writes_message_to_stdout(capsys):
     # On simule le fait que l'utilisateur a entré le nombre 10
     sys.stdin = io.StringIO("10")
     result = prompt_number("un message pour l'utilisateur")
+    # On capture le texte affiché sur la sortie standard
     captured = capsys.readouterr()
     assert captured.out == "un message pour l'utilisateur"
 
@@ -29,6 +30,7 @@ def test_prompt_number_asks_question_twice_if_nonint_answer(capsys):
     # puis le nombre 10
     sys.stdin = io.StringIO("aaa\n10")
     result = prompt_number("un message pour l'utilisateur")
+    # On capture le texte affiché sur la sortie standard
     captured = capsys.readouterr()
     assert captured.out == "un message pour l'utilisateur" * 2
 
@@ -40,6 +42,7 @@ def test_prompt_number_returns_a_number_larger_than_min(capsys):
     # 3, puis 4, puis 5
     sys.stdin = io.StringIO("1\n2\n3\n4\n5")
     result = prompt_number("un message pour l'utilisateur", min_=5)
+    # On capture le texte affiché sur la sortie standard
     captured = capsys.readouterr()
     # On vérifie que le message est affiché jusqu'à ce que l'utiliateur
     # donne un nombre plus grand que le minimum, soit 5 fois.
