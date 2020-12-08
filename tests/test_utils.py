@@ -33,7 +33,7 @@ def test_prompt_number_writes_message_to_stdout(capsys, monkeypatch):
 def test_prompt_number_asks_question_twice_if_nonint_answer(
     capsys, monkeypatch
 ):
-    """Vérifie que le message est affiché une seconde si l'utilisateur entre
+    """Vérifie que le message est affiché une seconde fois si l'utilisateur entre
     une chaine de caractères à la place d'un entier."""
     inputs = ["aaa", "10"]
 
@@ -48,12 +48,18 @@ def test_prompt_number_asks_question_twice_if_nonint_answer(
 
 
 def test_prompt_number_returns_a_number_larger_than_min(capsys, monkeypatch):
-    def user_input(message, inputs=["1", "10"]):
+    """Vérifie que le message est affiché tant que l'utilisateur ne répond pas
+    avec une nombre supérieur à la valeur minimale demandée."""
+    inputs = ["1", "2", "3", "4", "5", "6"]
+
+    def user_input(message):
         print(message, end="")
         return inputs.pop(0)
 
     monkeypatch.setattr('builtins.input', user_input)
     result = prompt_number("un message pour l'utilisateur", min_=5)
     captured = capsys.readouterr()
-    assert captured.out == "un message pour l'utilisateur" * 2
-    assert result == 10
+    # On vérifie que le message est affiché jusqu'à ce que l'utiliateur
+    # donne un nombre plus grand que le minimum, soit 5 fois.
+    assert captured.out == "un message pour l'utilisateur" * 5
+    assert result == 5

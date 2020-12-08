@@ -8,7 +8,7 @@ vous pouvez installer les dépendances et activer l'environnement virtuel
 à l'aide des deux commandes suivantes:
 
 ```
-$ pipenv install
+$ pipenv install --dev
 $ pipenv shell
 ```
 
