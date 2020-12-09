@@ -1,6 +1,9 @@
 # Webinaire: Testez dès que vous savez marcher avec vos premiers projets Python
 
-Ce dépôt de code contient le code développé lors du webinaire.
+Ce dépôt de code contient le code développé lors du webinaire et après. La 
+vidéo suivante a été réalisée en complément de ce code:
+
+TODO
 
 ## Dépendances
 Après avoir installé si nécessaire pipenv à l'aide de la commande pip install pipenv,

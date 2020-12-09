@@ -4,7 +4,7 @@ from zcasino.utils import prompt_number
 
 
 def test_prompt_number_returns_a_number(capsys, monkeypatch):
-    """Vérifie que notre fonction prompt_number retourne un entier."""
+    """Vérifie que prompt_number retourne un entier."""
     # On simule une entrée utilisateur pour éviter de bloquer sur input()
     monkeypatch.setattr('sys.stdin', io.StringIO('10'))
     # On exécute la fonction à tester
@@ -30,10 +30,10 @@ def test_prompt_number_writes_message_to_stdout(capsys, monkeypatch):
 def test_prompt_number_asks_question_twice_if_nonint_answer(
     capsys, monkeypatch
 ):
-    """Vérifie que le message est affiché une seconde fois si l'utilisateur entre
-    une chaine de caractères à la place d'un entier."""
+    """Vérifie que le message est affiché une seconde fois si l'utilisateur
+    saisit une chaine de caractères à la place d'un entier."""
     # On simule le fait que l'utilisateur a entré la chaine "aaa"
-    # puis le nombre 10
+    # puis, au second essai, le nombre 10
     monkeypatch.setattr('sys.stdin', io.StringIO('aaa\n10'))
     # On exécute la fonction à tester
     result = prompt_number("un message pour l'utilisateur")
@@ -48,7 +48,7 @@ def test_prompt_number_asks_question_twice_if_nonint_answer(
 def test_prompt_number_returns_a_number_larger_than_min(capsys, monkeypatch):
     """Vérifie que le message est affiché tant que l'utilisateur ne répond pas
     avec une nombre supérieur à la valeur minimale demandée."""
-    # On simule le fait que l'utilisateur a entré les nombre 1, puis 2, puis
+    # On simule le fait que l'utilisateur a entré les nombres 1, puis 2, puis
     # 3, puis 4, puis 5
     monkeypatch.setattr('sys.stdin', io.StringIO('1\n2\n3\n4\n5'))
     # On exécute la fonction à tester
